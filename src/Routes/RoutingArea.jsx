@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from '../App'
 import Flipkart from '../Flipkart/Flipkart'
 import Admin from '../AdminPanel/Admin'
-import NotFound from '../Component/NotFound'
+import NotFound from '../Component/NotFound.jsx'
 
 
 const RoutingArea = () => {
