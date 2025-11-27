@@ -1,5 +1,5 @@
 import React from 'react'
-import Navbar from './component/Navbar'
+import Navbar from './Component/Navbar'
 import { Outlet } from 'react-router-dom'
 import MyStore from './Store/MyStore'
 import ModalForm from './AdminPanel/ModalForm'
