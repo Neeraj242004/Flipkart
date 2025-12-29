@@ -2,78 +2,108 @@ import React, { useContext, useEffect } from 'react'
 import { DataProvider } from '../Store/MyStore'
 
 const Admin = () => {
-  const {state:{user}} = useContext(DataProvider)
-    const {getAllUsers,state:{userList,getId},deleteUsers,handleShow,dispatch,getSingleUsers} =useContext(DataProvider)
-    useEffect(()=>{
-        getAllUsers()
-    },[])
+  const {
+    getAllUsers,
+    state: { userList },
+    deleteUsers,
+    handleShow,
+    dispatch,
+    getSingleUsers
+  } = useContext(DataProvider)
 
-    const handleDelete =(id)=>{
-      deleteUsers(id)
-    } 
-    const handleEdit = (id)=>{
-      dispatch({type:"formCheck",payload:"Edit"});
-      getSingleUsers(id)
-      handleShow()
-      dispatch({type:"changeId",payload:id});
-    }
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
-  const handleRead =(id)=>{
-     dispatch({type:"changeId",payload:id});
-     dispatch({type:"formCheck",payload:"Read"});
-     getSingleUsers(id)
-     handleShow();
+  const handleDelete = (id) => deleteUsers(id)
+
+  const handleEdit = (id) => {
+    dispatch({ type: "formCheck", payload: "Edit" })
+    dispatch({ type: "changeId", payload: id })
+    getSingleUsers(id)
+    handleShow()
   }
+
+  const handleRead = (id) => {
+    dispatch({ type: "formCheck", payload: "Read" })
+    dispatch({ type: "changeId", payload: id })
+    getSingleUsers(id)
+    handleShow()
+  }
+
   return (
-    <div>
-<table className="table table-sm table-striped table-bordered text-center align-middle">
-  <thead>
-    <tr>
-      <th scope="col">Sr.No</th>
-      <th scope="col">Name</th>
-      <th scope="col">Age</th>
-      <th scope="col">Email</th>
-      <th scope="col">Photo</th>
-      <th scope="col">Address</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-     {userList.map((elm,ind)=> {
-        const {name,Age,Address,image,email,id} = elm
-        return  (
-      <tr key={elm.id}>
-      <th scope="row">{ind + 1}</th>
-      <td>{name}</td>
-      <td>{Age}</td>
-      <td>{email}</td>
-      <td> 
-        <img
-        width={"100"}
-        height={"100"}
- src={image}
- alt="" /></td>
-       <td>{Address}</td>
-       <td>
-        <div className="btn-group">
-            <button className='btn btn-success btn-sm px-2 py-1'
-            onClick={()=>handleEdit(id)}
-            >Edit</button>
-            <button className='btn btn-danger btn-sm px-2 py-1'
-            onClick={()=>handleDelete(id)}
-            >Delete</button>
-            <button className='btn btn-warning btn-sm px-2 py-1'
-            onClick={()=>handleRead(id)}
-            >Read</button>
-        </div>
-       </td>
-    </tr>
-     )}
-    
-)}
-  
-  </tbody>
-</table></div>
+    <div className="container-fluid mt-3">
+      <div className="table-responsive">
+
+        <table className="table table-sm table-striped table-bordered text-center align-middle">
+          <thead>
+            <tr>
+              <th>Sr</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th className="d-none d-md-table-cell">Email</th>
+              <th>Photo</th>
+              <th className="d-none d-md-table-cell">Address</th>
+
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {userList.map((elm, ind) => {
+              const { name, Age, Address, image, email, id } = elm
+
+              return (
+                <tr key={id}>
+                  <td>{ind + 1}</td>
+                  <td>{name}</td>
+                  <td>{Age}</td>
+                  <td className="d-none d-md-table-cell text-break">
+                    {email}
+                  </td>
+                  <td>
+                    <img
+                      src={image}
+                      alt=""
+                      className="img-fluid rounded"
+                      style={{ maxWidth: "70px", height: "auto" }}
+                    />
+                  </td>
+
+                  <td className="d-none d-md-table-cell text-break">
+                    {Address}
+                  </td>
+
+                  <td>
+                    <div className="d-flex flex-wrap gap-1 justify-content-center">
+                      <button
+                        className="btn btn-success btn-sm"
+                        onClick={() => handleEdit(id)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(id)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="btn btn-warning btn-sm"
+                        onClick={() => handleRead(id)}
+                      >
+                        Read
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+
+      </div>
+    </div>
   )
 }
 
